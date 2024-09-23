@@ -78,4 +78,4 @@ while True:
     else:
         print("Error:", response.status_code)
 
-    time.sleep(1)  # Wait for 5 seconds before the next request
+    time.sleep(1)  # Wait for 1 seconds before the next request
