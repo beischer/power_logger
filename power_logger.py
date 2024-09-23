@@ -3,21 +3,21 @@ import time
 import json
 import psycopg2
 import datetime
+import secrets
 
-# Replace with your database credentials
-host = "localhost"
-database = "house_power"
-user = "postgres"
-password = "Magnus71"
-
-url = "http://192.168.1.215/api/v1/data"
+# Set the variables from secrets.py
+host = secrets.host
+database = secrets.database
+user = secrets.user
+password = secrets.password
+url = secrets.url
 
 
 def log_to_database(data):
     time_now = datetime.datetime.now()
     formatted_time = time_now.strftime("%Y-%m-%d %H:%M:%S.%f")
-    print("Incoming data", data)
-# Connect to the database
+    # print("Incoming data", data)
+    # Connect to the database
     try:
         # Connect to the database
         conn = psycopg2.connect(
@@ -58,7 +58,7 @@ def log_to_database(data):
         # Commit the changes
         conn.commit()
 
-        print("Data inserted successfully!")
+        print(f"Power: {int(active_power_w)} W")
 
     except psycopg2.Error as e:
         print("Error:", e)
@@ -79,10 +79,3 @@ while True:
         print("Error:", response.status_code)
 
     time.sleep(1)  # Wait for 5 seconds before the next request
-
-
-#  'wifi_strength': 64, 'total_power_import_kwh': 37835.001,
-#  'active_power_w': 4491.0, 'active_power_l1_w': 903.0, 'active_power_l2_w': 1281.0, 'active_power_l3_w': 2306.0,
-#  'active_voltage_l1_v': 236.1, 'active_voltage_l2_v': 238.0, 'active_voltage_l3_v': 236.1,
-#  'active_current_a': 20.3, 'active_current_l1_a': 4.5, 'active_current_l2_a': 5.9, 'active_current_l3_a': 9.9,
-
